@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "18df4971-68ce-4031-ba5a-22b0a0494d70",
+		"name": "Booking-Project_Collection01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20665591"
+	},
+	"item": [
+		{
+			"name": "CreateBooking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsondata = pm.response.json()\r",
+							"\r",
+							"pm.environment.set(\"ziid\", jsondata.bookingid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstname\": \"Zahidul\",\r\n\t\"lastname\": \"Islam\",\r\n\t\"totalprice\": 3072,\r\n\t\"depositpaid\": true,\r\n\t\"bookingdates\": {\r\n    \t\"checkin\": \"2021-10-01\",\r\n    \t\"checkout\": \"2021-11-01\"\r\n\t},\r\n\t\"additionalneeds\": \"Dinner\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/booking/",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"booking",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBookedData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.firstname).to.eql(\"Zahidul\");\r",
+							"});\r",
+							"console.log(jsonData.totalprice)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/booking/{{ziid}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"booking",
+						"{{ziid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBookedData",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{useraccess}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Md Zahidul\",\r\n    \"lastname\": \"Safique\",\r\n    \"totalprice\": 3041,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2021-10-01\",\r\n        \"checkout\": \"2021-11-01\"\r\n    },\r\n    \"additionalneeds\": \"Lunch\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/booking/{{ziid}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"booking",
+						"{{ziid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookedUserToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsondata=pm.response.json()\r",
+							"pm.environment.set(\"useraccess\",jsondata.token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/auth",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserDeletion",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{useraccess}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/booking/{{ziid}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"booking",
+						"{{ziid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
